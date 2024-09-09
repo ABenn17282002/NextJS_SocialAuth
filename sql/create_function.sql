@@ -27,28 +27,5 @@ AFTER INSERT ON auth.users
 FOR EACH ROW
 EXECUTE FUNCTION insert_profile();
 
--- ステップ3: authenticated ロールに INSERT と SELECT 権限を付与
-GRANT INSERT, SELECT ON TABLE profiles TO authenticated;
-
--- ステップ4: anon ロールに INSERT と SELECT 権限を付与
-GRANT INSERT, SELECT ON TABLE profiles TO anon;
-
--- ステップ5: service_role ロールに INSERT と SELECT 権限を付与
-GRANT INSERT, SELECT ON TABLE profiles TO service_role;
-
--- ステップ6: profiles テーブルに行レベルセキュリティを有効化
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-
--- ステップ7: anon ロールがデータを挿入できるポリシーを作成
-CREATE POLICY "Allow anon insert"
-ON profiles FOR INSERT
-TO anon
-WITH CHECK (true);
-
--- （オプション）SELECT を制限するポリシーを作成
-CREATE POLICY "Deny anon select"
-ON profiles FOR SELECT
-TO anon
-USING (false);
 
 
