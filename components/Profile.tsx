@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from './ui/button'
 import Link from "next/link";
 import useUser from '@/app/hook/useUser';
+import Image from 'next/image';
 
 export default function Profile() {
 
@@ -15,11 +16,17 @@ export default function Profile() {
   return (
     <div>
     {!data?.id ? (
-      <Link href="/auth">
+      <Link href="/auth" className="animate-fade">
         <Button variant="outline">SignIn</Button>
       </Link>
     ) : (
-      <h1>{data.display_name}</h1>
+      <Image
+        src={data.image_url || "/images/default-avatar.png"}
+        alt={data.display_name || "User Avatar"}
+        width={50}
+        height={50}
+        className="rounded-full animate-fade"
+      />
     )}
   </div>
   )
